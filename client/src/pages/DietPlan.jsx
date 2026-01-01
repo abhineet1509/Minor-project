@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 import { Calendar, RefreshCw, ChevronRight, Flame, Utensils, Clock, Brain, Zap, Check } from 'lucide-react';
 
 const DietPlan = () => {
@@ -20,7 +21,7 @@ const DietPlan = () => {
 
     const fetchPlan = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/api/diet/current', { withCredentials: true });
+            const { data } = await axios.get(`${API_BASE_URL}/diet/current`, { withCredentials: true });
             setPlan(data);
         } catch (error) {
             console.log("No plan found");
@@ -30,7 +31,7 @@ const DietPlan = () => {
     const generatePlan = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.post('http://localhost:5000/api/diet/generate', {}, { withCredentials: true });
+            const { data } = await axios.post(`${API_BASE_URL}/diet/generate`, {}, { withCredentials: true });
             setPlan(data);
             setLoading(false);
         } catch (error) {
@@ -137,8 +138,8 @@ const DietPlan = () => {
                                     key={day}
                                     onClick={() => setActiveDay(day)}
                                     className={`px-6 py-3 rounded-full text-sm font-semibold capitalize text-left transition-all whitespace-nowrap lg:whitespace-normal flex justify-between items-center ${activeDay === day
-                                            ? 'bg-[#1D1D1F] text-white shadow-md'
-                                            : 'bg-white text-[#86868B] hover:bg-gray-50'
+                                        ? 'bg-[#1D1D1F] text-white shadow-md'
+                                        : 'bg-white text-[#86868B] hover:bg-gray-50'
                                         }`}
                                 >
                                     {day}

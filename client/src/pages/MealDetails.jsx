@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, Clock, Flame, Utensils, ChefHat, Heart, AlertCircle, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 const MealDetails = () => {
     const { name } = useParams();
@@ -15,7 +16,7 @@ const MealDetails = () => {
             try {
                 // Encode the name for URL safety
                 const encodedName = encodeURIComponent(name);
-                const { data } = await axios.get(`http://localhost:5000/api/diet/meal/${encodedName}`, { withCredentials: true });
+                const { data } = await axios.get(`${API_BASE_URL}/diet/meal/${encodedName}`, { withCredentials: true });
                 setMeal(data);
                 setLoading(false);
             } catch (error) {

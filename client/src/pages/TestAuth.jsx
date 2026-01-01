@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 const TestAuth = () => {
     const { user } = useAuth();
@@ -29,7 +30,7 @@ const TestAuth = () => {
 
             // Test 2: Try to fetch profile
             try {
-                const profileRes = await axios.get('http://localhost:5000/api/users/profile', {
+                const profileRes = await axios.get(`${API_BASE_URL}/users/profile`, {
                     withCredentials: true
                 });
                 results.profileAPI = profileRes.data;
@@ -41,7 +42,7 @@ const TestAuth = () => {
 
             // Test 3: Try to fetch diet plan
             try {
-                const dietRes = await axios.get('http://localhost:5000/api/diet/current', {
+                const dietRes = await axios.get(`${API_BASE_URL}/diet/current`, {
                     withCredentials: true
                 });
                 results.dietAPI = dietRes.data;

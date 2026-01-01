@@ -4,6 +4,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, CheckCircle, Save, ArrowLeft, Dumbbell } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const WorkoutLogger = () => {
     const { user } = useAuth();
@@ -44,7 +45,7 @@ const WorkoutLogger = () => {
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/workouts/log', { exercises }, { withCredentials: true });
+            await axios.post(`${API_BASE_URL}/workouts/log`, { exercises }, { withCredentials: true });
             navigate('/dashboard');
         } catch (error) {
             console.error(error);

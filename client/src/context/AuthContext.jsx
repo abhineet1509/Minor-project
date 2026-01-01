@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 const AuthContext = createContext();
 
@@ -18,8 +19,8 @@ export const AuthProvider = ({ children }) => {
     });
     const [loading, setLoading] = useState(true); // Start as true to verify session
 
-    // Set axios default base URL if needed, or handle in calls
-    const API_URL = 'http://localhost:5000/api/auth';
+    // Use centralized configuration
+    // API_BASE_URL is 'https://minor-project-ceg5.onrender.com/api'
 
     // Verify user session on mount
     useEffect(() => {
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true // Important for cookies
             };
-            const { data } = await axios.post(`${API_URL}/login`, { email, password }, config);
+            const { data } = await axios.post(`${API_BASE_URL}/auth/login`, { email, password }, config);
             setUser(data);
             localStorage.setItem('userInfo', JSON.stringify(data));
             setLoading(false);
@@ -54,7 +55,7 @@ export const AuthProvider = ({ children }) => {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             };
-            const { data } = await axios.post(`${API_URL}/register`, { name, email, password }, config);
+            const { data } = await axios.post(`${API_BASE_URL}/auth/register`, { name, email, password }, config);
             setUser(data);
             localStorage.setItem('userInfo', JSON.stringify(data));
             setLoading(false);
@@ -67,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+            await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
             localStorage.removeItem('userInfo');
             setUser(null);
         } catch (error) {
@@ -87,7 +88,7 @@ export const AuthProvider = ({ children }) => {
                 },
                 withCredentials: true
             };
-            const { data } = await axios.put(`${API_URL.replace('/auth', '/users')}/profile`, updatedData, config);
+            const { data } = await axios.put(`${API_BASE_URL}/users/profile`, updatedData, config);
 
             const newUserData = { ...user, ...data };
             setUser(newUserData);
@@ -102,7 +103,7 @@ export const AuthProvider = ({ children }) => {
     // Function to refresh user data from server
     const refreshUser = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/api/users/profile', {
+            const { data } = await axios.get(`${API_BASE_URL}/users/profile`, {
                 withCredentials: true
             });
             const updatedUser = { ...user, ...data };

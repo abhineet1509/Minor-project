@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Send, Bot, User, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 const Chat = () => {
     const [messages, setMessages] = useState([
@@ -29,7 +30,7 @@ const Chat = () => {
         setLoading(true);
 
         try {
-            const { data } = await axios.post('http://localhost:5000/api/chat', { message: userMsg }, { withCredentials: true });
+            const { data } = await axios.post(`${API_BASE_URL}/chat`, { message: userMsg }, { withCredentials: true });
             setMessages(prev => [...prev, { role: 'bot', content: data.reply }]);
         } catch (error) {
             setMessages(prev => [...prev, { role: 'bot', content: "Sorry, I'm having trouble connecting to the server." }]);

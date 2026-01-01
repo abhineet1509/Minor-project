@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft, Check, User, Activity, Utensils, Ruler, Weight } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const Onboarding = () => {
     const { user, refreshUser } = useAuth();
@@ -31,12 +32,12 @@ const Onboarding = () => {
     const handleSubmit = async () => {
         try {
             // Update user profile
-            await axios.put('http://localhost:5000/api/users/profile', formData, {
+            await axios.put(`${API_BASE_URL}/users/profile`, formData, {
                 withCredentials: true
             });
 
             // Generate diet plan automatically
-            await axios.post('http://localhost:5000/api/diet/generate', {}, {
+            await axios.post(`${API_BASE_URL}/diet/generate`, {}, {
                 withCredentials: true
             });
 

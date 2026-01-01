@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dumbbell, RefreshCw, ChevronRight, Clock, Flame, Target, Play, Calendar, Activity } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const WorkoutPlanner = () => {
     const { user } = useAuth();
@@ -21,7 +22,7 @@ const WorkoutPlanner = () => {
     const fetchPlan = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get('http://localhost:5000/api/workouts/current', { withCredentials: true });
+            const { data } = await axios.get(`${API_BASE_URL}/workouts/current`, { withCredentials: true });
             setPlan(data);
         } catch (error) {
             console.log("No workout plan found");
@@ -33,7 +34,7 @@ const WorkoutPlanner = () => {
     const generatePlan = async () => {
         setGenerating(true);
         try {
-            const { data } = await axios.post('http://localhost:5000/api/workouts/generate', { mode }, { withCredentials: true });
+            const { data } = await axios.post(`${API_BASE_URL}/workouts/generate`, { mode }, { withCredentials: true });
             setPlan(data);
         } catch (error) {
             console.error(error);

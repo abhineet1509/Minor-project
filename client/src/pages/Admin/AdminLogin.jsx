@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Lock, ChevronRight, Mail } from 'lucide-react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config';
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const AdminLogin = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post('http://localhost:5000/api/admin/login', { email, password }, { withCredentials: true });
+            const { data } = await axios.post(`${API_BASE_URL}/admin/login`, { email, password }, { withCredentials: true });
             localStorage.setItem('adminInfo', JSON.stringify(data));
             navigate('/admin');
         } catch (err) {

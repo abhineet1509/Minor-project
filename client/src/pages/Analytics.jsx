@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { TrendingUp, Activity, Target, Calendar, ChevronRight, BarChart2, Plus, Check, Trash2 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
+import { API_BASE_URL } from '../config';
+
 const Analytics = () => {
     const { user, updateUser } = useAuth();
     const [logs, setLogs] = useState([]);
@@ -50,7 +52,7 @@ const Analytics = () => {
     useEffect(() => {
         const fetchLogs = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5000/api/workouts/logs', { withCredentials: true });
+                const { data } = await axios.get(`${API_BASE_URL}/workouts/logs`, { withCredentials: true });
                 setLogs(data);
             } catch (error) {
                 console.error(error);

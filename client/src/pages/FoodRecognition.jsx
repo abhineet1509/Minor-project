@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, Upload, Search, Flame, Target, Utensils, Zap, CheckCircle2 } from 'lucide-react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 const FoodRecognition = () => {
     const [image, setImage] = useState(null);
@@ -24,7 +25,7 @@ const FoodRecognition = () => {
         setError(null);
 
         try {
-            const { data } = await axios.post('http://localhost:5000/api/food/recognize',
+            const { data } = await axios.post(`${API_BASE_URL}/food/recognize`,
                 { image },
                 { withCredentials: true }
             );
