@@ -12,7 +12,10 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173'], // Setup for Vite default port
+    origin: ['http://localhost:5173',
+             "https://minor-project-1-gl4t.onrender.com"
+            ],
+    // Setup for Vite default port
     credentials: true
 }));
 app.use(cookieParser());
